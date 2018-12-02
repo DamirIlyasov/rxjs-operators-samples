@@ -1,6 +1,21 @@
 import {Component, OnInit} from '@angular/core';
-import {combineLatest, concat, from, interval, merge, Observable, of} from 'rxjs';
-import {catchError, share, startWith, tap, withLatestFrom} from 'rxjs/operators';
+import {combineLatest, concat, from, fromEvent, interval, merge, Observable, of, Subject, timer} from 'rxjs';
+import {
+  bufferTime,
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  mergeMap,
+  scan,
+  startWith,
+  switchMap,
+  take,
+  takeUntil,
+  tap,
+  withLatestFrom
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -18,9 +33,20 @@ export class AppComponent implements OnInit {
     // this.withLatestFrom();
     // this.from();
     // this.of();
-    this.catchError();
+    // this.catchError();
     // this.tap();
-    // this.share();
+    // this.debounceTime();
+    // this.distinctUntilChanged();
+    // this.filter();
+    // this.take();
+    // this.takeUntil();
+    // this.share(); НЕ ГОТОВО
+    // this.shareReply(); НЕ ГОТОВО
+    // this.bufferTime();
+    // this.map();
+    // this.switchMap();
+    // this.mergeMap();
+    this.scan();
   }
 
   combineLatest() {
@@ -87,6 +113,9 @@ export class AppComponent implements OnInit {
   }
 
   from() {
+    // Turn an array, promise, or iterable into an observable
+    // берёт один объект
+    from([{qwe: 'qwe'}]);
     const firstObs = from([1, 2, 3, 4]);
     firstObs.subscribe(value => {
       console.log('Value: ', value);
@@ -94,6 +123,9 @@ export class AppComponent implements OnInit {
   }
 
   of() {
+    // Emit variable amount of values in a sequence and then emits a complete notification
+    // берёт массив тоже
+    // TODO: отличия from от of
     const object: {
       field1: string,
       field2: number
@@ -143,19 +175,109 @@ export class AppComponent implements OnInit {
     });
   }
 
-  share() {
-    let counter = 0;
-    const notShared = new Observable(observer => {
-      console.log('Counter: ', counter);
-      counter++;
-      observer.next(123);
-    });
+  debounceTime() {
+    const button = document.getElementById('F');
+    // fromEvent(source, eventName) - превращает всё это дело в обсервабл
+    // интервал между нажатиями > 2с
+    const observable = fromEvent(button, 'click').pipe(debounceTime(2000));
+    observable.subscribe(() => console.log('hah, not working :('));
+  }
 
-    const shared = notShared.pipe(share());
+  distinctUntilChanged() {
+    const observable = of(1, 1, 2, 2, 3, 3, 4, 4);
+    observable.pipe(distinctUntilChanged()).subscribe(v => console.log(v));
+  }
 
-    notShared.subscribe(() => {
-    });
-    notShared.subscribe(() => {
-    });
+  filter() {
+    const observable = of(1, 1, 2, 2, 3, 3, 4, 4);
+    observable.pipe(
+      filter(v => v > 2)
+    ).subscribe(v => console.log(v));
+  }
+
+  take() {
+    const observable = of(1, 1, 2, 2, 3, 3, 4, 4).pipe(take(2));
+    observable.subscribe(v => console.log(v));
+  }
+
+  takeUntil() {
+    const timerEmits = timer(5000);
+    const observable = interval(1000);
+
+    observable.pipe(
+      takeUntil(timerEmits)
+    ).subscribe(v => console.log(v));
+  }
+
+// TODO: share и shareReply ИЗУЧИТЬ
+  // share() {
+  //   // блок выполняется при каждой подписке, если не использовать share()
+  //   let counter = 0;
+  //   const notShared = new Observable(observer => {
+  //     console.log('Counter: ', counter);
+  //     counter++;
+  //     observer.next(1);
+  //     observer.next(2);
+  //   });
+  //
+  //   const shared = notShared.pipe(share());
+  //
+  //   // notShared.subscribe();
+  //   // notShared.subscribe();
+  //   // notShared.subscribe();
+  //
+  //   shared.subscribe(v => console.log(v + 'first'));
+  //   shared.subscribe(v => console.log(v + 'second'));
+  //   shared.subscribe(v => console.log(v + 'third'));
+  // }
+  //
+  // shareReply() {
+  //
+  // }
+
+  bufferTime() {
+    const observable = interval(500).pipe(bufferTime(2000));
+    observable.subscribe(v => console.log(v));
+  }
+
+  map() {
+    const observable = of(1, 2, 3, 4, 5, 6, 7, 8).pipe(map(v => v + 10));
+    observable.subscribe(v => console.log(v));
+  }
+
+  switchMap() {
+    // TODO: придумать нормальное объяснение
+    const timerEmits = timer(0, 5000);
+    timerEmits.pipe(
+      switchMap(() => interval(1000))
+    ).subscribe(v => console.log(v));
+  }
+
+  mergeMap() {
+    // отличие от switchMap - не убивает внутренний обсервабл
+    const timerEmits = timer(0, 5000);
+    timerEmits.pipe(
+      mergeMap(() => interval(1000))
+    ).subscribe(v => console.log(v));
+  }
+
+  scan() {
+    // accumulating previous values
+
+    // const observable = of(1, 2, 3);
+    // observable.pipe(
+    //   scan((acc, value) => acc + value)
+    // ).subscribe(v => console.log(v));
+
+
+    const observable = new Subject();
+
+    observable.pipe(
+      scan((acc, value) => Object.assign(acc, value))
+    ).subscribe(v => console.log(v));
+
+    observable.next({name: 'Damir'});
+    observable.next({age: 21});
+    observable.next({city: 'Kazan'});
   }
 }
