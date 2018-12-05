@@ -16,6 +16,7 @@ import {
   tap,
   withLatestFrom
 } from 'rxjs/operators';
+import {CustomConsole} from './custom-console';
 
 @Component({
   selector: 'app-root',
@@ -25,31 +26,32 @@ import {
 export class AppComponent implements OnInit {
   title = 'Operators';
 
+  // this.tap();
+  // this.combineLatest();
+  // this.concat();
+  // this.merge();
+  // this.startWith();
+  // this.withLatestFrom();
+  // this.from();
+  // this.of();
+  // this.catchError();
+  // this.debounceTime();
+  // this.distinctUntilChanged();
+  // this.filter();
+  // this.take();
+  // this.takeUntil();
+  // this.share(); НЕ ГОТОВО
+  // this.shareReply(); НЕ ГОТОВО
+  // this.bufferTime();
+  // this.map();
+  // this.switchMap();
+  // this.mergeMap();
+  // this.scan();
   ngOnInit(): void {
-    // this.combineLatest();
-    // this.concat();
-    // this.merge();
-    // this.startWith();
-    // this.withLatestFrom();
-    // this.from();
-    // this.of();
-    // this.catchError();
-    // this.tap();
-    // this.debounceTime();
-    // this.distinctUntilChanged();
-    // this.filter();
-    // this.take();
-    // this.takeUntil();
-    // this.share(); НЕ ГОТОВО
-    // this.shareReply(); НЕ ГОТОВО
-    // this.bufferTime();
-    // this.map();
-    // this.switchMap();
-    // this.mergeMap();
-    this.scan();
   }
 
   combineLatest() {
+    const console = new CustomConsole('combineLatestConsole');
     const firstObs = new Observable(observer => {
       setTimeout(() => observer.next(1), 4000);
     });
@@ -72,6 +74,7 @@ export class AppComponent implements OnInit {
   }
 
   concat() {
+    const console = new CustomConsole('concatConsole');
     const firstObs = of(1, 2, 3);
     const secondObs = of(4, 5, 6);
     const result = concat(firstObs, secondObs);
@@ -81,6 +84,7 @@ export class AppComponent implements OnInit {
   }
 
   merge() {
+    const console = new CustomConsole('mergeConsole');
     const firstObs = of(1, 1, 1);
     const secondObs = of(2, 2, 2);
     const merged = merge(firstObs, secondObs);
@@ -90,6 +94,7 @@ export class AppComponent implements OnInit {
   }
 
   startWith() {
+    const console = new CustomConsole('startWithConsole');
     const firstObs = of(1, 2, 3);
     const result = firstObs.pipe(startWith(0));
     result.subscribe(value => {
@@ -98,6 +103,7 @@ export class AppComponent implements OnInit {
   }
 
   withLatestFrom() {
+    const console = new CustomConsole('withLatestFromConsole');
     const firstObs = interval(5000);
     const secondObs = interval(1000);
     const result = firstObs.pipe(
@@ -113,6 +119,7 @@ export class AppComponent implements OnInit {
   }
 
   from() {
+    const console = new CustomConsole('fromConsole');
     // Turn an array, promise, or iterable into an observable
     // берёт один объект
     from([{qwe: 'qwe'}]);
@@ -123,6 +130,7 @@ export class AppComponent implements OnInit {
   }
 
   of() {
+    const console = new CustomConsole('ofConsole');
     // Emit variable amount of values in a sequence and then emits a complete notification
     // берёт массив тоже
     // TODO: отличия from от of
@@ -143,6 +151,7 @@ export class AppComponent implements OnInit {
   }
 
   catchError() {
+    const console = new CustomConsole('catchErrorConsole');
     const errorObservable = new Observable(observer => {
       observer.error('Error value');
       // вторая ошибка не будет обработана, т.к. catchError завершает observable
@@ -165,6 +174,7 @@ export class AppComponent implements OnInit {
   }
 
   tap() {
+    const console = new CustomConsole('tapConsole');
     const firstObs = of(1, 2, 3);
     firstObs.pipe(
       tap(v => {
@@ -176,6 +186,7 @@ export class AppComponent implements OnInit {
   }
 
   debounceTime() {
+    const console = new CustomConsole('debounceTimeConsole');
     const button = document.getElementById('F');
     // fromEvent(source, eventName) - превращает всё это дело в обсервабл
     // интервал между нажатиями > 2с
@@ -184,11 +195,13 @@ export class AppComponent implements OnInit {
   }
 
   distinctUntilChanged() {
+    const console = new CustomConsole('distinctUntilChangedConsole');
     const observable = of(1, 1, 2, 2, 3, 3, 4, 4);
     observable.pipe(distinctUntilChanged()).subscribe(v => console.log(v));
   }
 
   filter() {
+    const console = new CustomConsole('filterConsole');
     const observable = of(1, 1, 2, 2, 3, 3, 4, 4);
     observable.pipe(
       filter(v => v > 2)
@@ -196,11 +209,13 @@ export class AppComponent implements OnInit {
   }
 
   take() {
+    const console = new CustomConsole('takeConsole');
     const observable = of(1, 1, 2, 2, 3, 3, 4, 4).pipe(take(2));
     observable.subscribe(v => console.log(v));
   }
 
   takeUntil() {
+    const console = new CustomConsole('takeUntilConsole');
     const timerEmits = timer(5000);
     const observable = interval(1000);
 
@@ -236,16 +251,19 @@ export class AppComponent implements OnInit {
   // }
 
   bufferTime() {
+    const console = new CustomConsole('bufferTimeConsole');
     const observable = interval(500).pipe(bufferTime(2000));
     observable.subscribe(v => console.log(v));
   }
 
   map() {
+    const console = new CustomConsole('mapConsole');
     const observable = of(1, 2, 3, 4, 5, 6, 7, 8).pipe(map(v => v + 10));
     observable.subscribe(v => console.log(v));
   }
 
   switchMap() {
+    const console = new CustomConsole('switchMapConsole');
     // TODO: придумать нормальное объяснение
     const timerEmits = timer(0, 5000);
     timerEmits.pipe(
@@ -254,6 +272,7 @@ export class AppComponent implements OnInit {
   }
 
   mergeMap() {
+    const console = new CustomConsole('mergeMapConsole');
     // отличие от switchMap - не убивает внутренний обсервабл
     const timerEmits = timer(0, 5000);
     timerEmits.pipe(
@@ -262,6 +281,7 @@ export class AppComponent implements OnInit {
   }
 
   scan() {
+    const console = new CustomConsole('scanConsole');
     // accumulating previous values
 
     // const observable = of(1, 2, 3);
@@ -279,5 +299,15 @@ export class AppComponent implements OnInit {
     observable.next({name: 'Damir'});
     observable.next({age: 21});
     observable.next({city: 'Kazan'});
+  }
+
+  openInfo(id: string) {
+    const console = new CustomConsole('openInfoConsole');
+    const element = document.getElementById(id);
+    if (element.classList.contains('visible')) {
+      element.classList.remove('visible');
+    } else {
+      element.classList.add('visible');
+    }
   }
 }
