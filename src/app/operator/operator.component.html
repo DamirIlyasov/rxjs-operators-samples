@@ -1,0 +1,9 @@
+<button (click)="openInfo(operatorName)">{{operatorName}}()</button>
+<div id="{{operatorName}}" class="element">
+  <div>{{operatorDescription}}</div>
+  <div class="consoles">
+    <ngx-codemirror [(ngModel)]="operatorCode" disabled="true" [options]="codeMirrorOptions"></ngx-codemirror>
+    <button (click)="runOperatorMethod()">Run code</button>
+    <textarea class="console" id="{{operatorName}}Console" type="text" disabled></textarea>
+  </div>
+</div>

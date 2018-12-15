@@ -1,22 +1,4 @@
-
-//@import "~codemirror/lib/codemirror.css";
-//@import "~codemirror/theme/material.css";
-
-
-input {
-  height: 200px;
-}
-div.element {
-  visibility: hidden;
-}
-
-div.visible {
-  visibility: visible;
-}
-
-.consoles {
-  display: flex;
-  flex-direction: row;
-}
-
-
+//:host {
+//  display: flex;
+//  flex-direction: column;
+//}

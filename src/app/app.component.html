@@ -1,9 +1,19 @@
-<button (click)="openInfo('tap')">tap()</button>
-<div id="tap" class="element">
-  <div>Transparently perform actions or side-effects, such as logging.</div>
-  <div class="consoles">
-    <ngx-codemirror [(ngModel)]="tapText" disabled="true" [options]="codeMirrorOptions"></ngx-codemirror>
-    <button (click)="tap()">Run code</button>
-    <textarea class="console" id="tapConsole" type="text" disabled></textarea>
-  </div>
-</div>
+<app-operator operatorName="tap"></app-operator>
+<app-operator operatorName="combineLatest"></app-operator>
+<app-operator operatorName="concat"></app-operator>
+<app-operator operatorName="merge"></app-operator>
+<app-operator operatorName="startWith"></app-operator>
+<app-operator operatorName="withLatestFrom"></app-operator>
+<app-operator operatorName="from"></app-operator>
+<app-operator operatorName="of"></app-operator>
+<app-operator operatorName="catchError"></app-operator>
+<app-operator operatorName="debounceTime"></app-operator>
+<app-operator operatorName="distinctUntilChanged"></app-operator>
+<app-operator operatorName="filter"></app-operator>
+<app-operator operatorName="take"></app-operator>
+<app-operator operatorName="takeUntil"></app-operator>
+<app-operator operatorName="bufferTime"></app-operator>
+<app-operator operatorName="map"></app-operator>
+<app-operator operatorName="switchMap"></app-operator>
+<app-operator operatorName="mergeMap"></app-operator>
+<app-operator operatorName="scan"></app-operator>
