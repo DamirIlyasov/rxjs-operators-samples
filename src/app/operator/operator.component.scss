@@ -4,10 +4,12 @@ input {
 }
 div.element {
   visibility: hidden;
+  position: absolute;
 }
 
 div.visible {
   visibility: visible;
+  position: relative;
 }
 
 .consoles {
