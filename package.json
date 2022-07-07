@@ -36,7 +36,7 @@
     "codemirror": "^5.42.0",
     "core-js": "2.5.5",
     "imask": "4.1.1",
-    "moment": "2.22.2",
+    "moment": "2.29.4",
     "ngx-cookie-service": "1.0.10",
     "payment": "2.3.0",
     "rxjs": "6.2.0",
