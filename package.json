@@ -58,7 +58,7 @@
     "codelyzer": "4.3.0",
     "jasmine-core": "2.8.0",
     "jasmine-data-provider": "2.2.0",
-    "jasmine-reporters": "2.3.2",
+    "jasmine-reporters": "2.5.0",
     "karma": "2.0.2",
     "karma-chrome-launcher": "2.2.0",
     "karma-coverage-istanbul-reporter": "1.4.3",
